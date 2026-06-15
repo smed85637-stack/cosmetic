@@ -103,7 +103,8 @@
           <a class="hover:text-roseDeep" href="#order">الطلب</a>
         </nav>
         <div class="flex items-center gap-2">
-          <button id="search-toggle" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm"><i data-lucide="search" class="w-5 h-5"></i></button>
+          <button id="search-toggle" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm" aria-label="بحث"><i data-lucide="search" class="w-5 h-5"></i></button>
+          <button id="account-btn" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm relative" aria-label="حسابي"><i data-lucide="user-round" class="w-5 h-5 text-roseDeep"></i></button>
           <button id="cart-btn" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm relative"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cart-count" class="absolute -top-1 -left-1 min-w-5 h-5 rounded-full bg-roseDeep text-white text-[10px] font-black flex items-center justify-center">0</span></button>
           <a href="https://wa.me/22237929637" target="_blank" class="hidden md:flex items-center gap-2 h-11 px-5 rounded-full bg-[#19a858] text-white font-black text-sm shadow-sm hover:bg-[#158f4a] transition"><i data-lucide="message-circle" class="w-4 h-4"></i> واتساب</a>
           <button id="menu-btn" class="lg:hidden w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm"><i data-lucide="menu" class="w-5 h-5"></i></button>
@@ -111,7 +112,7 @@
       </div>
       <div id="search-bar" class="hidden pb-4">
         <div class="relative max-w-2xl mx-auto">
-          <input id="search-input" class="w-full h-[52px] rounded-full border border-rose-100 bg-white px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 shadow-card" placeholder="ابحثي عن سيروم، عطر، كريم، شامبو..." />
+          <input id="search-input" class="w-full h-13 rounded-full border border-rose-100 bg-white px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 shadow-card" placeholder="ابحثي عن سيروم، عطر، كريم، شامبو..." />
           <i data-lucide="search" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-roseDeep"></i>
         </div>
       </div>
@@ -121,6 +122,7 @@
         <a class="p-3 rounded-2xl bg-white" href="#products">المنتجات</a>
         <a class="p-3 rounded-2xl bg-white" href="#offers">العروض</a>
         <a class="p-3 rounded-2xl bg-white" href="#order">الطلب عبر واتساب</a>
+        <button id="mobile-account-btn" class="p-3 rounded-2xl bg-white text-right flex items-center justify-between"><span>حسابي</span><i data-lucide="user-round" class="w-4 h-4 text-roseDeep"></i></button>
       </nav>
     </div>
   </header>
@@ -213,7 +215,7 @@
             <span class="inline-flex px-4 py-2 rounded-full bg-white/15 text-sm font-black">باقة خاصة</span>
             <h3 class="mt-5 text-3xl md:text-5xl font-black">باقة العروس الناعمة</h3>
             <p class="mt-4 text-white/75 max-w-xl leading-relaxed">مجموعة مكياج وعطر وعناية بالبشرة بتغليف فاخر وسعر مناسب. اطلبي التفاصيل عبر واتساب.</p>
-            <a href="#order" class="mt-7 inline-flex h-[52px] px-7 rounded-full bg-white text-plum font-black items-center gap-2">اطلبي الباقة <i data-lucide="arrow-left" class="w-5 h-5"></i></a>
+            <a href="#order" class="mt-7 inline-flex h-13 px-7 rounded-full bg-white text-plum font-black items-center gap-2">اطلبي الباقة <i data-lucide="arrow-left" class="w-5 h-5"></i></a>
           </div>
           <div class="rounded-[2rem] bg-cream p-8 shadow-card border border-rose-100">
             <div class="w-14 h-14 rounded-3xl bg-white flex items-center justify-center text-roseDeep shadow-sm"><i data-lucide="percent" class="w-7 h-7"></i></div>
@@ -250,11 +252,11 @@
         </div>
         <form id="order-form" class="lg:col-span-7 bg-[#fff8fb] rounded-[2rem] p-6 md:p-8 shadow-soft border border-rose-100">
           <div class="grid md:grid-cols-2 gap-4">
-            <label class="block"><span class="text-sm font-black">الاسم الكامل</span><input name="name" required class="mt-2 w-full h-[52px] rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: مريم أحمد"></label>
-            <label class="block"><span class="text-sm font-black">رقم الهاتف</span><input name="phone" required dir="ltr" class="mt-2 w-full h-[52px] rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="37 XX XX XX"></label>
-            <label class="block"><span class="text-sm font-black">المنتج</span><select id="product-select" name="product" class="mt-2 w-full h-[52px] rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"><option value="">اختاري منتجاً...</option></select></label>
-            <label class="block"><span class="text-sm font-black">الكمية</span><input name="qty" type="number" min="1" value="1" class="mt-2 w-full h-[52px] rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"></label>
-            <label class="md:col-span-2 block"><span class="text-sm font-black">العنوان / الحي</span><input name="address" required class="mt-2 w-full h-[52px] rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: تفرغ زينة، قرب..."></label>
+            <label class="block"><span class="text-sm font-black">الاسم الكامل</span><input name="name" required class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: مريم أحمد"></label>
+            <label class="block"><span class="text-sm font-black">رقم الهاتف</span><input name="phone" required dir="ltr" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="37 XX XX XX"></label>
+            <label class="block"><span class="text-sm font-black">المنتج</span><select id="product-select" name="product" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"><option value="">اختاري منتجاً...</option></select></label>
+            <label class="block"><span class="text-sm font-black">الكمية</span><input name="qty" type="number" min="1" value="1" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"></label>
+            <label class="md:col-span-2 block"><span class="text-sm font-black">العنوان / الحي</span><input name="address" required class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: تفرغ زينة، قرب..."></label>
             <label class="md:col-span-2 block"><span class="text-sm font-black">ملاحظات</span><textarea name="notes" rows="3" class="mt-2 w-full rounded-2xl border border-rose-100 bg-white px-4 py-3 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="درجة لون، وقت التوصيل، هدية..."></textarea></label>
           </div>
           <button class="mt-5 w-full h-14 rounded-full bg-roseDeep text-white font-black shadow-glow flex items-center justify-center gap-2 hover:bg-[#843d5f] transition"><i data-lucide="send" class="w-5 h-5"></i> إرسال الطلب عبر واتساب</button>
@@ -285,10 +287,50 @@
       <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
       <div class="p-5 border-t border-rose-100 bg-[#fff8fb]">
         <div class="flex justify-between items-center mb-2"><span class="text-plum/60 font-bold">الإجمالي</span><span id="cart-total" class="font-black text-2xl">0 MRU</span></div>
-        <button id="checkout-btn" class="w-full h-[52px] rounded-full bg-[#19a858] text-white font-black flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> إتمام الطلب عبر واتساب</button>
+        <button id="checkout-btn" class="w-full h-13 rounded-full bg-[#19a858] text-white font-black flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> إتمام الطلب عبر واتساب</button>
         <button id="clear-cart" class="w-full h-11 mt-2 rounded-full bg-white border border-rose-100 font-black text-sm">تفريغ السلة</button>
       </div>
     </aside>
+  </div>
+
+
+
+  <div id="account-modal" class="fixed inset-0 z-[95] hidden items-center justify-center px-4">
+    <div id="account-overlay" class="absolute inset-0 bg-black/45"></div>
+    <div class="relative w-full max-w-[430px] bg-white rounded-[30px] shadow-2xl border border-rose-100 overflow-hidden fade-in">
+      <div class="bg-gradient-to-br from-roseMilk via-white to-[#f7ecff] p-6 text-center border-b border-rose-100">
+        <button id="close-account" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/80 hover:bg-roseMilk flex items-center justify-center shadow-sm" aria-label="إغلاق"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <div class="w-16 h-16 rounded-3xl bg-white shadow-card mx-auto flex items-center justify-center text-roseDeep">
+          <i data-lucide="user-round" class="w-8 h-8"></i>
+        </div>
+        <h3 class="mt-4 text-2xl font-black text-plum">حسابي</h3>
+        <p class="mt-1 text-sm text-plum/60 font-bold">بيانات الدخول الخاصة بالعميل</p>
+      </div>
+
+      <form id="client-login-form" class="p-6 space-y-4">
+        <div>
+          <label class="block mb-2 text-sm font-black text-plum">الإيميل</label>
+          <div class="relative">
+            <input id="client-email" type="email" value="Client@gmail.com" class="w-full h-13 rounded-2xl bg-[#fff8fb] border border-rose-100 px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 font-bold text-plum" dir="ltr" />
+            <i data-lucide="mail" class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-roseDeep"></i>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-2 text-sm font-black text-plum">الكود</label>
+          <div class="relative">
+            <input id="client-code" type="text" value="1234" class="w-full h-13 rounded-2xl bg-[#fff8fb] border border-rose-100 px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 font-bold text-plum" dir="ltr" />
+            <i data-lucide="key-round" class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-roseDeep"></i>
+          </div>
+        </div>
+        <button type="submit" class="w-full h-13 rounded-full bg-roseDeep text-white font-black shadow-glow flex items-center justify-center gap-2 hover:bg-[#843d5f] transition">
+          <i data-lucide="log-in" class="w-5 h-5"></i>
+          دخول الحساب
+        </button>
+        <div class="rounded-2xl bg-roseMilk border border-rose-100 p-4 text-sm text-plum/75 leading-relaxed">
+          <strong class="text-plum">ملاحظة:</strong> هذا حساب عميل داخل المتجر لعرض بيانات الدخول فقط، والطلب ما زال يتم عبر واتساب.
+        </div>
+      </form>
+    </div>
   </div>
 
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] hidden bg-plum text-white px-5 py-3 rounded-full shadow-soft font-black text-sm"></div>
@@ -421,6 +463,8 @@
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
     }
     function toast(text){ const t=document.getElementById('toast'); t.textContent=text; t.classList.remove('hidden'); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.classList.add('hidden'),2200); }
+    function openAccount(){ document.getElementById('account-modal').classList.remove('hidden'); document.getElementById('account-modal').classList.add('flex'); }
+    function closeAccount(){ document.getElementById('account-modal').classList.add('hidden'); document.getElementById('account-modal').classList.remove('flex'); }
 
     document.addEventListener('DOMContentLoaded',()=>{
       renderCategories(); renderFilters(); renderProducts(); updateCount(); renderCart();
@@ -428,6 +472,11 @@
       document.getElementById('search-input').oninput = e => { search = e.target.value.trim(); visible = 8; renderProducts(); };
       document.getElementById('load-more').onclick = () => { visible += 8; renderProducts(); };
       document.getElementById('cart-btn').onclick = openCart;
+      document.getElementById('account-btn').onclick = openAccount;
+      document.getElementById('mobile-account-btn').onclick = () => { document.getElementById('mobile-menu').classList.add('hidden'); openAccount(); };
+      document.getElementById('close-account').onclick = closeAccount;
+      document.getElementById('account-overlay').onclick = closeAccount;
+      document.getElementById('client-login-form').onsubmit = e => { e.preventDefault(); const email=document.getElementById('client-email').value.trim(); const code=document.getElementById('client-code').value.trim(); if(email.toLowerCase()==='client@gmail.com' && code==='1234'){ toast('تم فتح حسابي بنجاح'); closeAccount(); } else { toast('الإيميل أو الكود غير صحيح'); } };
       document.getElementById('open-cart-float').onclick = openCart;
       document.getElementById('close-cart').onclick = closeCart;
       document.getElementById('cart-overlay').onclick = closeCart;
