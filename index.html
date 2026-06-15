@@ -1,710 +1,358 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ريم بيوتي | متجر منتجات التجميل في موريتانيا</title>
-  <meta name="description" content="متجر ريم بيوتي لبيع منتجات التجميل والعناية بالبشرة والشعر والعطور في موريتانيا مع الطلب عبر واتساب." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { tajawal: ['Tajawal', 'sans-serif'] },
-          colors: {
-            roseMilk: '#FFF3F7',
-            roseSoft: '#F9DDE8',
-            roseDeep: '#9B4D72',
-            plum: '#3A2430',
-            gold: '#C7A064',
-            cream: '#FFF9F2',
-            mist: '#F7EEF4',
-            ink: '#24171F'
-          },
-          boxShadow: {
-            soft: '0 18px 60px rgba(155,77,114,.12)',
-            glow: '0 20px 45px rgba(199,160,100,.25)',
-            card: '0 12px 35px rgba(36,23,31,.08)'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    *{font-family:'Tajawal',sans-serif}
-    html{scroll-behavior:smooth}
-    body{background:#fffaf8;color:#24171F;overflow-x:hidden}
-    .hero-bg{
-      background:
-        radial-gradient(circle at 15% 10%, rgba(249,221,232,.95), transparent 28%),
-        radial-gradient(circle at 92% 5%, rgba(240,218,245,.9), transparent 32%),
-        linear-gradient(135deg,#fff9f2 0%,#fff2f7 45%,#fbf0ff 100%);
-    }
-    .glass{background:rgba(255,250,248,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-    .shine{position:relative;overflow:hidden}
-    .shine:after{content:'';position:absolute;inset:0;transform:translateX(120%) skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:shine 4.5s infinite}
-    @keyframes shine{0%{transform:translateX(120%) skewX(-18deg)}45%,100%{transform:translateX(-120%) skewX(-18deg)}}
-    .product-card:hover .product-img{transform:scale(1.06)}
-    .product-img{transition:.55s cubic-bezier(.2,.8,.2,1)}
-    .drawer-open{transform:translateX(0)!important}
-    .fade-in{animation:fadeIn .45s ease both}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#fff3f7}::-webkit-scrollbar-thumb{background:#e8c5d4;border-radius:99px}
-    @media(max-width:640px){
-      .hero-title{font-size:2.35rem;line-height:1.12}
-      .mobile-grid{grid-template-columns:1fr 1fr;gap:.75rem}
-      .product-action{flex-direction:column;align-items:stretch}.product-action button{width:100%}
-    }
-  </style>
-</head>
-<body class="font-tajawal">
-  <div class="fixed bottom-5 right-5 z-[80] flex flex-col gap-3">
-    <button id="open-cart-float" class="w-14 h-14 rounded-full bg-plum text-white shadow-soft flex items-center justify-center relative hover:scale-105 transition" aria-label="السلة">
-      <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-      <span id="float-count" class="absolute -top-1 -left-1 min-w-6 h-6 rounded-full bg-gold text-plum text-xs font-black flex items-center justify-center">0</span>
-    </button>
-    <a href="https://wa.me/22237929637?text=مرحبا%20ريم%20بيوتي%20أريد%20الطلب" target="_blank" class="w-14 h-14 rounded-full bg-[#19a858] text-white shadow-soft flex items-center justify-center hover:scale-105 transition" aria-label="واتساب">
-      <i data-lucide="message-circle" class="w-6 h-6"></i>
-    </a>
-  </div>
+<!-- ✅ إصلاح ظهور المنتجات في الهاتف + إدارة المنتجات -->
+<style>
+  body {
+    overflow-x: hidden;
+  }
 
-  <div class="bg-plum text-white text-xs md:text-sm">
-    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-gold"></i><span>عروض جديدة كل أسبوع على منتجات التجميل والعناية</span></div>
-      <div class="flex items-center gap-4">
-        <span class="hidden sm:inline">الدفع عند الاستلام</span>
-        <a class="flex items-center gap-1 font-bold" href="tel:+22237929637" dir="ltr"><i data-lucide="phone" class="w-3.5 h-3.5"></i>+222 37 92 96 37</a>
-      </div>
+  #reem-products-section {
+    direction: rtl;
+    padding: 45px 18px;
+    background: #fff7fb;
+    font-family: inherit;
+  }
+
+  #reem-products-section .reem-products-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  #reem-products-section h2 {
+    margin: 0;
+    font-size: 34px;
+    color: #241722;
+    font-weight: 900;
+  }
+
+  #reem-products-section .reem-small-title {
+    color: #a05779;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  #reem-admin-login-btn,
+  #reem-add-product-btn {
+    border: none;
+    background: #9b4f72;
+    color: white;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  #reem-add-product-btn {
+    display: none;
+    background: #2f7d48;
+  }
+
+  #reem-products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .reem-product-card {
+    display: block !important;
+    background: white;
+    border-radius: 28px;
+    padding: 16px;
+    box-shadow: 0 12px 35px rgba(74, 36, 58, 0.10);
+    border: 1px solid rgba(160, 87, 121, 0.15);
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .reem-product-img {
+    width: 100%;
+    height: 170px;
+    border-radius: 22px;
+    background: #f3e8ef;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reem-product-card h3 {
+    margin: 13px 0 6px;
+    color: #241722;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .reem-product-card p {
+    margin: 0 0 10px;
+    color: #8c7c86;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .reem-price {
+    color: #9b4f72;
+    font-weight: 900;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .reem-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .reem-order-btn,
+  .reem-edit-btn,
+  .reem-delete-btn {
+    flex: 1;
+    border: none;
+    border-radius: 16px;
+    padding: 10px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .reem-order-btn {
+    background: #9b4f72;
+    color: white;
+  }
+
+  .reem-edit-btn {
+    display: none;
+    background: #e7d2dc;
+    color: #4b2638;
+  }
+
+  .reem-delete-btn {
+    display: none;
+    background: #ffe1e1;
+    color: #a52424;
+  }
+
+  body.reem-admin-mode .reem-edit-btn,
+  body.reem-admin-mode .reem-delete-btn,
+  body.reem-admin-mode #reem-add-product-btn {
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    #reem-products-section {
+      padding: 35px 14px;
+    }
+
+    #reem-products-section .reem-products-head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    #reem-products-section h2 {
+      font-size: 30px;
+    }
+
+    #reem-products-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+    }
+
+    .reem-product-img {
+      height: 190px;
+    }
+  }
+</style>
+
+<section id="reem-products-section">
+  <div class="reem-products-head">
+    <div>
+      <div class="reem-small-title">منتجات مختارة</div>
+      <h2>منتجات المتجر</h2>
+    </div>
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button id="reem-admin-login-btn">حسابي</button>
+      <button id="reem-add-product-btn">+ إضافة منتج</button>
     </div>
   </div>
 
-  <header class="sticky top-0 z-50 border-b border-rose-100 glass">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="h-20 flex items-center justify-between gap-4">
-        <a href="#home" class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-roseSoft to-[#ead8ff] shadow-card flex items-center justify-center relative">
-            <span class="font-black text-roseDeep text-2xl">ر</span>
-            <span class="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-gold border-2 border-white"></span>
-          </div>
-          <div>
-            <div class="font-black text-xl leading-tight">ريم بيوتي</div>
-            <div class="text-xs text-roseDeep/80 font-bold">Reem Beauty • Mauritania</div>
-          </div>
-        </a>
-        <nav class="hidden lg:flex items-center gap-7 text-sm font-bold text-plum/80">
-          <a class="hover:text-roseDeep" href="#home">الرئيسية</a>
-          <a class="hover:text-roseDeep" href="#categories">الأقسام</a>
-          <a class="hover:text-roseDeep" href="#products">المنتجات</a>
-          <a class="hover:text-roseDeep" href="#offers">العروض</a>
-          <a class="hover:text-roseDeep" href="#order">الطلب</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <button id="search-toggle" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm" aria-label="بحث"><i data-lucide="search" class="w-5 h-5"></i></button>
-          <button id="account-btn" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm relative" aria-label="حسابي"><i data-lucide="user-round" class="w-5 h-5 text-roseDeep"></i></button>
-          <button id="cart-btn" class="w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm relative"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cart-count" class="absolute -top-1 -left-1 min-w-5 h-5 rounded-full bg-roseDeep text-white text-[10px] font-black flex items-center justify-center">0</span></button>
-          <a href="https://wa.me/22237929637" target="_blank" class="hidden md:flex items-center gap-2 h-11 px-5 rounded-full bg-[#19a858] text-white font-black text-sm shadow-sm hover:bg-[#158f4a] transition"><i data-lucide="message-circle" class="w-4 h-4"></i> واتساب</a>
-          <button id="menu-btn" class="lg:hidden w-11 h-11 rounded-full bg-white/75 hover:bg-roseMilk flex items-center justify-center shadow-sm"><i data-lucide="menu" class="w-5 h-5"></i></button>
+  <div id="reem-products-grid"></div>
+</section>
+
+<script>
+(function () {
+  const ADMIN_EMAIL = "Client@gmail.com";
+  const ADMIN_CODE = "1234";
+  const WHATSAPP_NUMBER = "22237929637";
+
+  const STORAGE_KEY = "reem_beauty_products_v1";
+
+  const defaultProducts = [
+    {
+      id: Date.now() + 1,
+      name: "فلتر زواج",
+      price: "حسب الطلب",
+      desc: "فلتر جميل ومناسب للمناسبات.",
+      img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 2,
+      name: "فلتر خطوبة",
+      price: "حسب الطلب",
+      desc: "تصميم أنيق بألوان ناعمة.",
+      img: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 3,
+      name: "فلتر تخرج",
+      price: "حسب الطلب",
+      desc: "فلتر احترافي لحفلات التخرج.",
+      img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 4,
+      name: "فلتر عقد زواج",
+      price: "حسب الطلب",
+      desc: "تصميم راقٍ ومناسب للتوثيق والمشاركة.",
+      img: "https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?auto=format&fit=crop&w=800&q=80"
+    }
+  ];
+
+  function getProducts() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
+      return defaultProducts;
+    }
+
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
+      return defaultProducts;
+    }
+  }
+
+  function saveProducts(products) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById("reem-products-grid");
+    const products = getProducts();
+
+    if (!products.length) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:35px;color:#9b4f72;font-weight:800;">
+          لا توجد منتجات حالياً
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = products.map(product => `
+      <div class="reem-product-card">
+        <img class="reem-product-img" src="${product.img || ''}" onerror="this.src='https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80'">
+        <h3>${product.name}</h3>
+        <p>${product.desc || ''}</p>
+        <div class="reem-price">${product.price || 'حسب الطلب'}</div>
+
+        <div class="reem-card-actions">
+          <button class="reem-order-btn" onclick="reemOrderProduct('${product.name}')">طلب واتساب</button>
+          <button class="reem-edit-btn" onclick="reemEditProduct(${product.id})">تعديل</button>
+          <button class="reem-delete-btn" onclick="reemDeleteProduct(${product.id})">حذف</button>
         </div>
       </div>
-      <div id="search-bar" class="hidden pb-4">
-        <div class="relative max-w-2xl mx-auto">
-          <input id="search-input" class="w-full h-13 rounded-full border border-rose-100 bg-white px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 shadow-card" placeholder="ابحثي عن سيروم، عطر، كريم، شامبو..." />
-          <i data-lucide="search" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-roseDeep"></i>
-        </div>
-      </div>
-      <nav id="mobile-menu" class="hidden lg:hidden pb-4 grid gap-2 text-sm font-bold">
-        <a class="p-3 rounded-2xl bg-white" href="#home">الرئيسية</a>
-        <a class="p-3 rounded-2xl bg-white" href="#categories">الأقسام</a>
-        <a class="p-3 rounded-2xl bg-white" href="#products">المنتجات</a>
-        <a class="p-3 rounded-2xl bg-white" href="#offers">العروض</a>
-        <a class="p-3 rounded-2xl bg-white" href="#order">الطلب عبر واتساب</a>
-        <button id="mobile-account-btn" class="p-3 rounded-2xl bg-white text-right flex items-center justify-between"><span>حسابي</span><i data-lucide="user-round" class="w-4 h-4 text-roseDeep"></i></button>
-      </nav>
-    </div>
-  </header>
+    `).join("");
+  }
 
-  <main>
-    <section id="home" class="hero-bg relative overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 py-14 md:py-24 grid lg:grid-cols-2 gap-12 items-center">
-        <div class="order-2 lg:order-1">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-card border border-rose-100 text-roseDeep text-xs font-black">
-            <span class="w-2 h-2 rounded-full bg-gold"></span> منتجات تجميل مختارة بعناية في موريتانيا
-          </div>
-          <h1 class="hero-title mt-5 text-5xl lg:text-7xl font-black leading-[1.08] text-plum">
-            متجر أنيق<br><span class="text-roseDeep">لجمالك اليومي</span>
-          </h1>
-          <p class="mt-5 text-lg text-plum/70 leading-relaxed max-w-xl">ريم بيوتي يجمع لكِ المكياج، العناية بالبشرة، العناية بالشعر والعطور في صفحة واحدة جميلة وسهلة الطلب عبر واتساب.</p>
-          <div class="mt-7 flex flex-wrap items-center gap-3">
-            <a href="#products" class="h-14 px-7 rounded-full bg-roseDeep text-white font-black flex items-center gap-2 shadow-glow hover:bg-[#843d5f] transition">تسوّقي الآن <i data-lucide="arrow-left" class="w-5 h-5"></i></a>
-            <a href="#offers" class="h-14 px-7 rounded-full bg-white border border-rose-100 text-plum font-black flex items-center gap-2 shadow-card hover:border-roseSoft transition">العروض الخاصة</a>
-          </div>
-          <div class="mt-8 grid grid-cols-3 gap-3 max-w-xl">
-            <div class="bg-white/85 rounded-3xl p-4 shadow-card border border-white"><div class="text-2xl font-black text-roseDeep">24h</div><div class="text-xs text-plum/60 font-bold mt-1">توصيل نواكشوط</div></div>
-            <div class="bg-white/85 rounded-3xl p-4 shadow-card border border-white"><div class="text-2xl font-black text-roseDeep">+1200</div><div class="text-xs text-plum/60 font-bold mt-1">عميلة سعيدة</div></div>
-            <div class="bg-white/85 rounded-3xl p-4 shadow-card border border-white"><div class="text-2xl font-black text-roseDeep">4.9</div><div class="text-xs text-plum/60 font-bold mt-1">تقييم المتجر</div></div>
-          </div>
-        </div>
-        <div class="order-1 lg:order-2 relative">
-          <div class="absolute -inset-8 bg-white/50 rounded-full blur-3xl"></div>
-          <div class="relative grid grid-cols-2 gap-4 max-w-[560px] mx-auto">
-            <div class="space-y-4 pt-12">
-              <div class="rounded-[2rem] overflow-hidden shadow-soft border-4 border-white h-48 md:h-64"><img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=85" alt="منتجات تجميل"></div>
-              <div class="rounded-[2rem] bg-white p-5 shadow-card border border-rose-100 shine">
-                <div class="text-sm text-plum/60 font-bold">عرض اليوم</div>
-                <div class="mt-1 text-2xl font-black text-roseDeep">خصم 20%</div>
-                <div class="text-xs text-plum/60 mt-1">على العناية بالبشرة</div>
-              </div>
-            </div>
-            <div class="space-y-4">
-              <div class="rounded-[2rem] bg-white p-4 shadow-card border border-rose-100 flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-roseMilk flex items-center justify-center text-roseDeep"><i data-lucide="badge-check" class="w-6 h-6"></i></div>
-                <div><div class="font-black">أصلي 100%</div><div class="text-xs text-plum/55 font-bold">جودة مضمونة</div></div>
-              </div>
-              <div class="rounded-[2rem] overflow-hidden shadow-soft border-4 border-white h-72 md:h-[390px]"><img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=85" alt="مكياج"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  window.reemOrderProduct = function (name) {
+    const text = encodeURIComponent("السلام عليكم، أريد طلب: " + name);
+    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + text, "_blank");
+  };
 
-    <section class="py-8 bg-white border-y border-rose-100">
-      <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div class="rounded-3xl bg-cream p-4 flex items-center gap-3"><i data-lucide="truck" class="w-6 h-6 text-roseDeep"></i><div><div class="font-black text-sm">توصيل سريع</div><div class="text-xs text-plum/55">داخل موريتانيا</div></div></div>
-        <div class="rounded-3xl bg-cream p-4 flex items-center gap-3"><i data-lucide="wallet" class="w-6 h-6 text-roseDeep"></i><div><div class="font-black text-sm">دفع عند الاستلام</div><div class="text-xs text-plum/55">سهل وآمن</div></div></div>
-        <div class="rounded-3xl bg-cream p-4 flex items-center gap-3"><i data-lucide="gift" class="w-6 h-6 text-roseDeep"></i><div><div class="font-black text-sm">تغليف جميل</div><div class="text-xs text-plum/55">مناسب للهدايا</div></div></div>
-        <div class="rounded-3xl bg-cream p-4 flex items-center gap-3"><i data-lucide="message-circle-heart" class="w-6 h-6 text-roseDeep"></i><div><div class="font-black text-sm">طلب واتساب</div><div class="text-xs text-plum/55">رسالة جاهزة</div></div></div>
-      </div>
-    </section>
+  window.reemEditProduct = function (id) {
+    const products = getProducts();
+    const product = products.find(p => p.id === id);
+    if (!product) return;
 
-    <section id="categories" class="py-16 md:py-24 bg-white">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
-          <div>
-            <div class="text-roseDeep font-black text-sm">تسوقي حسب القسم</div>
-            <h2 class="text-3xl md:text-5xl font-black mt-2">أقسام المتجر</h2>
-          </div>
-          <a href="#products" class="font-black text-roseDeep">عرض كل المنتجات ←</a>
-        </div>
-        <div id="category-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"></div>
-      </div>
-    </section>
+    const name = prompt("اسم المنتج:", product.name);
+    if (name === null) return;
 
-    <section id="products" class="py-16 md:py-24 bg-[#fff6f8]">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center max-w-3xl mx-auto">
-          <div class="text-roseDeep font-black text-sm">منتجات مختارة</div>
-          <h2 class="text-3xl md:text-5xl font-black mt-2">الأكثر طلباً في ريم بيوتي</h2>
-          <p class="mt-4 text-plum/65 leading-relaxed">اختاري المنتج، أضيفيه للسلة، ثم أرسلي الطلب مباشرة على واتساب مع التفاصيل.</p>
-        </div>
-        <div id="filters" class="mt-9 flex flex-wrap justify-center gap-2"></div>
-        <div id="product-grid" class="mobile-grid mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
-        <div id="empty-state" class="hidden text-center py-20 text-plum/60 font-bold">لا توجد منتجات مطابقة للبحث.</div>
-        <div class="text-center mt-10"><button id="load-more" class="px-7 h-12 rounded-full bg-white border border-rose-100 shadow-card font-black hover:border-roseSoft">عرض المزيد</button></div>
-      </div>
-    </section>
+    const price = prompt("السعر:", product.price);
+    if (price === null) return;
 
-    <section id="offers" class="py-16 md:py-24 bg-white">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="grid lg:grid-cols-3 gap-5">
-          <div class="lg:col-span-2 rounded-[2rem] bg-gradient-to-br from-plum to-roseDeep text-white p-8 md:p-10 shadow-soft overflow-hidden relative">
-            <div class="absolute -left-10 -bottom-10 w-56 h-56 bg-white/10 rounded-full blur-2xl"></div>
-            <span class="inline-flex px-4 py-2 rounded-full bg-white/15 text-sm font-black">باقة خاصة</span>
-            <h3 class="mt-5 text-3xl md:text-5xl font-black">باقة العروس الناعمة</h3>
-            <p class="mt-4 text-white/75 max-w-xl leading-relaxed">مجموعة مكياج وعطر وعناية بالبشرة بتغليف فاخر وسعر مناسب. اطلبي التفاصيل عبر واتساب.</p>
-            <a href="#order" class="mt-7 inline-flex h-13 px-7 rounded-full bg-white text-plum font-black items-center gap-2">اطلبي الباقة <i data-lucide="arrow-left" class="w-5 h-5"></i></a>
-          </div>
-          <div class="rounded-[2rem] bg-cream p-8 shadow-card border border-rose-100">
-            <div class="w-14 h-14 rounded-3xl bg-white flex items-center justify-center text-roseDeep shadow-sm"><i data-lucide="percent" class="w-7 h-7"></i></div>
-            <h3 class="mt-5 text-2xl font-black">خصم العناية</h3>
-            <p class="mt-2 text-plum/65">خصم على السيروم، الغسول، المرطبات وواقي الشمس لفترة محدودة.</p>
-            <button data-jump-filter="skincare" class="mt-5 text-roseDeep font-black">شاهدي المنتجات ←</button>
-          </div>
-        </div>
-      </div>
-    </section>
+    const desc = prompt("الوصف:", product.desc);
+    if (desc === null) return;
 
-    <section class="py-16 md:py-24 bg-[#fff6f8]">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-10"><h2 class="text-3xl md:text-5xl font-black">آراء العميلات</h2><p class="mt-3 text-plum/60">ثقة العميلات هي أجمل إعلان للمتجر</p></div>
-        <div class="grid md:grid-cols-3 gap-5">
-          <article class="bg-white rounded-[2rem] p-6 shadow-card border border-rose-100"><div class="text-gold flex gap-1 mb-4">★★★★★</div><p class="text-plum/75 leading-relaxed">التوصيل سريع والتغليف جميل، طلبت سيروم وكان المنتج أصلي وجودته ممتازة.</p><div class="mt-5 font-black">أمينة — نواكشوط</div></article>
-          <article class="bg-white rounded-[2rem] p-6 shadow-card border border-rose-100"><div class="text-gold flex gap-1 mb-4">★★★★★</div><p class="text-plum/75 leading-relaxed">العطر ثابت ورائحته فاخرة، وخدمة واتساب سهلة جداً. أنصح بالمتجر.</p><div class="mt-5 font-black">فاطمة — تفرغ زينة</div></article>
-          <article class="bg-white rounded-[2rem] p-6 shadow-card border border-rose-100"><div class="text-gold flex gap-1 mb-4">★★★★★</div><p class="text-plum/75 leading-relaxed">الألوان مناسبة والصور واضحة، أحببت تجربة التسوق وسأطلب مرة أخرى.</p><div class="mt-5 font-black">مريم — لكصر</div></article>
-        </div>
-      </div>
-    </section>
+    const img = prompt("رابط الصورة:", product.img);
+    if (img === null) return;
 
-    <section id="order" class="py-16 md:py-24 bg-white">
-      <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-10 items-start">
-        <div class="lg:col-span-5">
-          <div class="text-roseDeep font-black text-sm">طلب سريع</div>
-          <h2 class="text-3xl md:text-5xl font-black mt-2">اطلبي عبر واتساب مباشرة</h2>
-          <p class="mt-4 text-plum/65 leading-relaxed">املئي البيانات وسيتم فتح واتساب برسالة جاهزة. يمكنكِ أيضاً استخدام السلة وإرسال كل المنتجات مرة واحدة.</p>
-          <div class="mt-7 space-y-4">
-            <div class="flex gap-3 items-center"><div class="w-12 h-12 rounded-2xl bg-roseMilk flex items-center justify-center text-roseDeep"><i data-lucide="phone" class="w-5 h-5"></i></div><div><div class="text-xs text-plum/55">الهاتف</div><div class="font-black" dir="ltr">+222 37 92 96 37</div></div></div>
-            <div class="flex gap-3 items-center"><div class="w-12 h-12 rounded-2xl bg-roseMilk flex items-center justify-center text-roseDeep"><i data-lucide="map-pin" class="w-5 h-5"></i></div><div><div class="text-xs text-plum/55">المكان</div><div class="font-black">موريتانيا - نواكشوط</div></div></div>
-            <div class="flex gap-3 items-center"><div class="w-12 h-12 rounded-2xl bg-roseMilk flex items-center justify-center text-roseDeep"><i data-lucide="clock" class="w-5 h-5"></i></div><div><div class="text-xs text-plum/55">العمل</div><div class="font-black">يومياً 9 صباحاً - 10 مساءً</div></div></div>
-          </div>
-        </div>
-        <form id="order-form" class="lg:col-span-7 bg-[#fff8fb] rounded-[2rem] p-6 md:p-8 shadow-soft border border-rose-100">
-          <div class="grid md:grid-cols-2 gap-4">
-            <label class="block"><span class="text-sm font-black">الاسم الكامل</span><input name="name" required class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: مريم أحمد"></label>
-            <label class="block"><span class="text-sm font-black">رقم الهاتف</span><input name="phone" required dir="ltr" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="37 XX XX XX"></label>
-            <label class="block"><span class="text-sm font-black">المنتج</span><select id="product-select" name="product" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"><option value="">اختاري منتجاً...</option></select></label>
-            <label class="block"><span class="text-sm font-black">الكمية</span><input name="qty" type="number" min="1" value="1" class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"></label>
-            <label class="md:col-span-2 block"><span class="text-sm font-black">العنوان / الحي</span><input name="address" required class="mt-2 w-full h-13 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: تفرغ زينة، قرب..."></label>
-            <label class="md:col-span-2 block"><span class="text-sm font-black">ملاحظات</span><textarea name="notes" rows="3" class="mt-2 w-full rounded-2xl border border-rose-100 bg-white px-4 py-3 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="درجة لون، وقت التوصيل، هدية..."></textarea></label>
-          </div>
-          <button class="mt-5 w-full h-14 rounded-full bg-roseDeep text-white font-black shadow-glow flex items-center justify-center gap-2 hover:bg-[#843d5f] transition"><i data-lucide="send" class="w-5 h-5"></i> إرسال الطلب عبر واتساب</button>
-        </form>
-      </div>
-    </section>
-  </main>
+    product.name = name.trim();
+    product.price = price.trim();
+    product.desc = desc.trim();
+    product.img = img.trim();
 
-  <footer class="bg-plum text-white">
-    <div class="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-8">
-      <div class="md:col-span-2">
-        <div class="flex items-center gap-3"><div class="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center text-gold font-black text-2xl">ر</div><div class="font-black text-2xl">ريم بيوتي</div></div>
-        <p class="mt-4 text-white/65 leading-relaxed max-w-md">متجر جميل وسهل لبيع منتجات التجميل والعناية الشخصية في موريتانيا مع طلب مباشر عبر واتساب.</p>
-      </div>
-      <div><div class="font-black mb-4">الأقسام</div><ul class="space-y-2 text-white/65"><li>المكياج</li><li>العناية بالبشرة</li><li>الشعر</li><li>العطور</li></ul></div>
-      <div><div class="font-black mb-4">التواصل</div><ul class="space-y-2 text-white/65"><li dir="ltr">+222 37 92 96 37</li><li>نواكشوط - موريتانيا</li><li>الدفع عند الاستلام</li></ul></div>
-    </div>
-    <div class="border-t border-white/10 py-5 text-center text-sm text-white/55">© 2026 ريم بيوتي — جميع الحقوق محفوظة</div>
-  </footer>
+    saveProducts(products);
+    renderProducts();
+  };
 
-  <div id="cart-drawer" class="fixed inset-0 z-[90] hidden">
-    <div id="cart-overlay" class="absolute inset-0 bg-black/45"></div>
-    <aside id="cart-panel" class="absolute left-0 top-0 h-full w-full max-w-[430px] bg-white shadow-2xl flex flex-col -translate-x-full transition-transform duration-300">
-      <div class="p-5 border-b border-rose-100 flex items-center justify-between">
-        <div class="font-black text-xl">سلة التسوق</div>
-        <button id="close-cart" class="w-10 h-10 rounded-full bg-roseMilk flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
-      <div class="p-5 border-t border-rose-100 bg-[#fff8fb]">
-        <div class="flex justify-between items-center mb-2"><span class="text-plum/60 font-bold">الإجمالي</span><span id="cart-total" class="font-black text-2xl">0 MRU</span></div>
-        <button id="checkout-btn" class="w-full h-13 rounded-full bg-[#19a858] text-white font-black flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> إتمام الطلب عبر واتساب</button>
-        <button id="clear-cart" class="w-full h-11 mt-2 rounded-full bg-white border border-rose-100 font-black text-sm">تفريغ السلة</button>
-      </div>
-    </aside>
-  </div>
+  window.reemDeleteProduct = function (id) {
+    if (!confirm("هل تريد حذف هذا المنتج؟")) return;
 
+    const products = getProducts().filter(p => p.id !== id);
+    saveProducts(products);
+    renderProducts();
+  };
 
-
-  <div id="account-modal" class="fixed inset-0 z-[95] hidden items-center justify-center px-4">
-    <div id="account-overlay" class="absolute inset-0 bg-black/45"></div>
-    <div id="account-box" class="relative w-full max-w-[980px] max-h-[92vh] overflow-y-auto bg-white rounded-[30px] shadow-2xl border border-rose-100 animate-fadeIn">
-      <div class="sticky top-0 z-10 bg-gradient-to-br from-roseMilk via-white to-[#f7ecff] p-5 md:p-6 border-b border-rose-100">
-        <button id="close-account" class="absolute top-4 left-4 w-10 h-10 rounded-full bg-white/80 hover:bg-roseMilk flex items-center justify-center shadow-sm" aria-label="إغلاق"><i data-lucide="x" class="w-5 h-5"></i></button>
-        <div class="flex items-center gap-4 pl-12">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-white shadow-card flex items-center justify-center text-roseDeep shrink-0">
-            <i data-lucide="user-round" class="w-7 h-7 md:w-8 md:h-8"></i>
-          </div>
-          <div>
-            <h3 class="text-2xl md:text-3xl font-black text-plum">حسابي / لوحة التحكم</h3>
-            <p class="mt-1 text-sm text-plum/60 font-bold">ادخل بالإيميل والكود لإضافة المنتجات وتعديلها وحذفها.</p>
-          </div>
-        </div>
-      </div>
-
-      <div id="login-section" class="p-6 max-w-md mx-auto">
-        <form id="client-login-form" class="space-y-4">
-          <div>
-            <label class="block mb-2 text-sm font-black text-plum">الإيميل</label>
-            <div class="relative">
-              <input id="client-email" type="email" value="Client@gmail.com" class="w-full h-13 rounded-2xl bg-[#fff8fb] border border-rose-100 px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 font-bold text-plum" dir="ltr" />
-              <i data-lucide="mail" class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-roseDeep"></i>
-            </div>
-          </div>
-          <div>
-            <label class="block mb-2 text-sm font-black text-plum">الكود</label>
-            <div class="relative">
-              <input id="client-code" type="text" inputmode="numeric" value="1234" class="w-full h-13 rounded-2xl bg-[#fff8fb] border border-rose-100 px-12 py-4 outline-none focus:ring-4 focus:ring-roseSoft/55 font-bold text-plum" dir="ltr" />
-              <i data-lucide="key-round" class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-roseDeep"></i>
-            </div>
-          </div>
-          <button type="submit" class="w-full h-13 rounded-full bg-roseDeep text-white font-black shadow-glow flex items-center justify-center gap-2 hover:bg-[#843d5f] transition">
-            <i data-lucide="log-in" class="w-5 h-5"></i>
-            دخول لوحة التحكم
-          </button>
-          <div class="rounded-2xl bg-roseMilk border border-rose-100 p-4 text-sm text-plum/75 leading-relaxed">
-            <strong class="text-plum">بيانات الدخول الصحيحة:</strong> Client@gmail.com / 1234
-          </div>
-        </form>
-      </div>
-
-      <div id="admin-section" class="hidden p-5 md:p-6">
-        <div class="grid lg:grid-cols-12 gap-5">
-          <form id="admin-product-form" class="lg:col-span-5 bg-[#fff8fb] rounded-[2rem] border border-rose-100 p-5 shadow-card">
-            <input type="hidden" id="admin-product-id" />
-            <div class="flex items-center justify-between gap-3 mb-4">
-              <div>
-                <h4 id="admin-form-title" class="text-xl font-black text-plum">إضافة منتج جديد</h4>
-                <p class="text-xs text-plum/55 font-bold mt-1">المنتج يظهر مباشرة في المتجر والسلة والطلب.</p>
-              </div>
-              <button type="button" id="admin-cancel-edit" class="hidden px-3 h-10 rounded-full bg-white border border-rose-100 text-roseDeep font-black text-xs">إلغاء التعديل</button>
-            </div>
-            <div class="grid md:grid-cols-2 gap-3">
-              <label class="md:col-span-2 block"><span class="text-sm font-black">اسم المنتج</span><input id="admin-name" required class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="مثال: سيروم فيتامين C"></label>
-              <label class="block"><span class="text-sm font-black">القسم</span><select id="admin-category" required class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"></select></label>
-              <label class="block"><span class="text-sm font-black">السعر MRU</span><input id="admin-price" required type="number" min="0" class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="950"></label>
-              <label class="block"><span class="text-sm font-black">السعر القديم</span><input id="admin-old-price" type="number" min="0" class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="اختياري"></label>
-              <label class="block"><span class="text-sm font-black">التقييم</span><input id="admin-rating" type="number" min="0" max="5" step="0.1" value="4.8" class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50"></label>
-              <label class="md:col-span-2 block"><span class="text-sm font-black">شارة المنتج</span><input id="admin-badge" class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="جديد / خصم / الأكثر طلباً"></label>
-              <label class="md:col-span-2 block"><span class="text-sm font-black">رابط صورة المنتج</span><input id="admin-img" dir="ltr" class="mt-2 w-full h-12 rounded-2xl border border-rose-100 bg-white px-4 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="https://..."></label>
-              <label class="md:col-span-2 block"><span class="text-sm font-black">الوصف</span><textarea id="admin-desc" rows="3" class="mt-2 w-full rounded-2xl border border-rose-100 bg-white px-4 py-3 outline-none focus:ring-4 focus:ring-roseSoft/50" placeholder="وصف قصير للمنتج"></textarea></label>
-            </div>
-            <button type="submit" id="admin-save-btn" class="mt-5 w-full h-13 rounded-full bg-roseDeep text-white font-black shadow-glow flex items-center justify-center gap-2 hover:bg-[#843d5f] transition"><i data-lucide="save" class="w-5 h-5"></i> حفظ المنتج</button>
-            <button type="button" id="admin-reset-products" class="mt-3 w-full h-11 rounded-full bg-white border border-rose-100 text-plum font-black text-sm">إرجاع المنتجات الأصلية</button>
-          </form>
-
-          <div class="lg:col-span-7 bg-white rounded-[2rem] border border-rose-100 p-5 shadow-card">
-            <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
-              <div>
-                <h4 class="text-xl font-black text-plum">إدارة المنتجات</h4>
-                <p id="admin-count" class="text-xs text-plum/55 font-bold mt-1">0 منتج</p>
-              </div>
-              <button id="admin-logout" type="button" class="px-4 h-10 rounded-full bg-roseMilk text-roseDeep font-black text-sm">خروج</button>
-            </div>
-            <div id="admin-products-list" class="space-y-3 max-h-[520px] overflow-y-auto pr-1"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] hidden bg-plum text-white px-5 py-3 rounded-full shadow-soft font-black text-sm"></div>
-
-  <script>
-    const WHATSAPP_NUMBER = '22237929637';
-    const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85';
-    const categories = [
-      {id:'makeup', name:'المكياج', desc:'أساس، روج، ماسكارا', icon:'brush', bg:'from-[#ffe7f0] to-[#ffd4e3]'},
-      {id:'skincare', name:'العناية بالبشرة', desc:'سيروم ومرطبات', icon:'droplets', bg:'from-[#e8f8ef] to-[#d7f0e3]'},
-      {id:'hair', name:'العناية بالشعر', desc:'زيوت وشامبو', icon:'sparkles', bg:'from-[#fff0dc] to-[#ffe2bd]'},
-      {id:'perfumes', name:'العطور', desc:'عطور ثابتة وفاخرة', icon:'flower-2', bg:'from-[#f4e8ff] to-[#ead6ff]'},
-      {id:'tools', name:'أدوات التجميل', desc:'فرش وإسفنجات', icon:'wand-sparkles', bg:'from-[#fff1f1] to-[#ffe2e2]'},
-      {id:'offers', name:'العروض', desc:'خصومات وباقات', icon:'badge-percent', bg:'from-[#fff7d8] to-[#ffeab0]'}
-    ];
-    const DEFAULT_PRODUCTS = [
-      {id:1,name:'سيروم فيتامين C',category:'skincare',price:1250,oldPrice:1450,rating:4.9,desc:'نضارة وتوحيد لون البشرة',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=85',badge:'الأكثر طلباً'},
-      {id:2,name:'غسول البشرة اللطيف',category:'skincare',price:680,oldPrice:null,rating:4.8,desc:'مناسب لكل أنواع البشرة',img:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:3,name:'كريم مرطب هيالورونيك',category:'skincare',price:890,oldPrice:null,rating:4.7,desc:'ترطيب عميق وملمس ناعم',img:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=85',badge:'جديد'},
-      {id:4,name:'واقي شمس SPF 50',category:'skincare',price:780,oldPrice:null,rating:4.8,desc:'حماية خفيفة بدون لمعة',img:'https://images.unsplash.com/photo-1556228578-ddfe93545e7e?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:5,name:'كريم أساس فلفت مات',category:'makeup',price:950,oldPrice:null,rating:4.8,desc:'تغطية طبيعية تدوم طويلاً',img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=85',badge:'مميز'},
-      {id:6,name:'أحمر شفاه مخملي',category:'makeup',price:450,oldPrice:520,rating:4.9,desc:'لون ثابت وترطيب جميل',img:'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=800&q=85',badge:'خصم'},
-      {id:7,name:'ماسكارا لاش دراما',category:'makeup',price:520,oldPrice:null,rating:4.7,desc:'كثافة وطول من أول طبقة',img:'https://images.unsplash.com/photo-1560717845-968a6f550533?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:8,name:'باليت ظلال نيود لوكس',category:'makeup',price:1350,oldPrice:null,rating:4.8,desc:'ألوان مطفية ولامعة',img:'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:9,name:'زيت الأرغان للشعر',category:'hair',price:850,oldPrice:null,rating:4.9,desc:'تغذية ولمعان طبيعي',img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=85',badge:'الأكثر مبيعاً'},
-      {id:10,name:'شامبو احترافي مغذي',category:'hair',price:720,oldPrice:null,rating:4.6,desc:'لشعر أقوى وأكثر نعومة',img:'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:11,name:'عطر روز إليغانت',category:'perfumes',price:1850,oldPrice:2100,rating:4.9,desc:'رائحة زهرية فاخرة وثابتة',img:'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=85',badge:'خصم'},
-      {id:12,name:'عطر فانيلا نوار',category:'perfumes',price:2400,oldPrice:null,rating:4.8,desc:'دافئ وأنثوي وفخم',img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=85',badge:'جديد'},
-      {id:13,name:'طقم فرش مكياج',category:'tools',price:1200,oldPrice:null,rating:4.7,desc:'12 قطعة بحقيبة أنيقة',img:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85',badge:null},
-      {id:14,name:'إسفنجة تجميل سوفت',category:'tools',price:280,oldPrice:null,rating:4.6,desc:'دمج ناعم بدون خطوط',img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=85',badge:null}
-    ];
-    const filterLabels = [{id:'all',name:'الكل'}, {id:'makeup',name:'المكياج'}, {id:'skincare',name:'العناية بالبشرة'}, {id:'hair',name:'الشعر'}, {id:'perfumes',name:'العطور'}, {id:'tools',name:'الأدوات'}];
-    let activeFilter = 'all';
-    let search = '';
-    let visible = 8;
-    let products = loadProducts();
-    let cart = JSON.parse(localStorage.getItem('reemBeautyCart') || '[]');
-    let adminLoggedIn = false;
-
-    const money = n => Number(n || 0).toLocaleString('ar-MR') + ' MRU';
-    const label = cat => (filterLabels.find(f => f.id === cat) || {}).name || cat;
-    const safe = value => String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
-    const cloneDefaultProducts = () => JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-
-    function loadProducts(){
-      try{
-        const saved = JSON.parse(localStorage.getItem('reemBeautyProducts') || 'null');
-        return Array.isArray(saved) && saved.length ? saved : cloneDefaultProducts();
-      }catch(e){ return cloneDefaultProducts(); }
-    }
-    function saveProducts(){
-      localStorage.setItem('reemBeautyProducts', JSON.stringify(products));
-      renderProducts(); renderCart(); renderProductSelect(); renderAdminProducts();
-      if(window.lucide) lucide.createIcons();
+  document.getElementById("reem-admin-login-btn").addEventListener("click", function () {
+    if (document.body.classList.contains("reem-admin-mode")) {
+      document.body.classList.remove("reem-admin-mode");
+      this.textContent = "حسابي";
+      return;
     }
 
-    function renderCategories(){
-      document.getElementById('category-grid').innerHTML = categories.map(c => `
-        <button class="group rounded-[1.7rem] bg-gradient-to-br ${c.bg} p-5 text-right border border-white shadow-card hover:-translate-y-1 hover:shadow-soft transition" data-cat="${c.id}">
-          <div class="w-12 h-12 rounded-2xl bg-white/80 flex items-center justify-center text-roseDeep"><i data-lucide="${c.icon}" class="w-6 h-6"></i></div>
-          <div class="mt-4 font-black text-lg">${safe(c.name)}</div>
-          <div class="text-xs text-plum/60 font-bold mt-1">${safe(c.desc)}</div>
-          <div class="mt-4 text-xs font-black text-roseDeep opacity-0 group-hover:opacity-100 transition">تسوقي الآن ←</div>
-        </button>`).join('');
-      document.querySelectorAll('[data-cat]').forEach(btn => btn.onclick = () => {
-        const cat = btn.dataset.cat;
-        if(cat === 'offers'){ location.hash = '#offers'; return; }
-        setFilter(cat); location.hash = '#products';
-      });
-    }
+    const email = prompt("أدخل الإيميل:");
+    const code = prompt("أدخل الكود:");
 
-    function renderFilters(){
-      document.getElementById('filters').innerHTML = filterLabels.map(f => `
-        <button class="filter-btn px-5 h-11 rounded-full font-black text-sm transition ${activeFilter===f.id?'bg-roseDeep text-white shadow-card':'bg-white text-plum border border-rose-100 hover:border-roseSoft'}" data-filter="${f.id}">${safe(f.name)}</button>`).join('');
-      document.querySelectorAll('[data-filter]').forEach(btn => btn.onclick = () => setFilter(btn.dataset.filter));
+    if (email === ADMIN_EMAIL && code === ADMIN_CODE) {
+      document.body.classList.add("reem-admin-mode");
+      this.textContent = "خروج";
+      alert("تم الدخول إلى حساب المدير");
+    } else {
+      alert("الإيميل أو الكود غير صحيح");
     }
+  });
 
-    function productCard(p){
-      const id = Number(p.id);
-      return `<article class="product-card fade-in bg-white rounded-[1.7rem] overflow-hidden border border-rose-100 shadow-card hover:shadow-soft transition flex flex-col">
-        <div class="relative aspect-[1/1.08] bg-roseMilk overflow-hidden">
-          <img class="product-img w-full h-full object-cover" src="${safe(p.img || DEFAULT_IMAGE)}" alt="${safe(p.name)}" loading="lazy" onerror="this.src='${DEFAULT_IMAGE}'">
-          ${p.badge ? `<span class="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-white/95 text-roseDeep text-[11px] font-black shadow-sm">${safe(p.badge)}</span>` : ''}
-          <button onclick="quickWhatsApp(${id})" class="absolute top-3 left-3 w-10 h-10 rounded-full bg-white/95 text-[#19a858] flex items-center justify-center shadow-sm"><i data-lucide="message-circle" class="w-5 h-5"></i></button>
-        </div>
-        <div class="p-4 flex-1 flex flex-col">
-          <div class="text-xs text-roseDeep font-black">${safe(label(p.category))}</div>
-          <h3 class="mt-1 font-black text-base md:text-lg leading-snug">${safe(p.name)}</h3>
-          <p class="mt-1 text-xs md:text-sm text-plum/60 leading-relaxed">${safe(p.desc)}</p>
-          <div class="mt-2 text-gold text-sm">★ <span class="text-plum/65 font-bold">${safe(p.rating || 4.8)}</span></div>
-          <div class="mt-auto pt-4 flex items-end justify-between gap-3 product-action">
-            <div><div class="font-black text-lg">${money(p.price)}</div>${p.oldPrice?`<div class="text-xs text-plum/40 line-through">${money(p.oldPrice)}</div>`:''}</div>
-            <button onclick="addToCart(${id})" class="px-4 h-11 rounded-full bg-plum text-white font-black text-sm hover:bg-roseDeep transition">أضف للسلة</button>
-          </div>
-        </div>
-      </article>`;
-    }
+  document.getElementById("reem-add-product-btn").addEventListener("click", function () {
+    const name = prompt("اسم المنتج:");
+    if (!name) return;
 
-    function renderProducts(){
-      const q = search.toLowerCase();
-      const list = products.filter(p => (activeFilter === 'all' || p.category === activeFilter) && (`${p.name} ${p.desc} ${label(p.category)}`.toLowerCase().includes(q)));
-      document.getElementById('product-grid').innerHTML = list.slice(0, visible).map(productCard).join('');
-      document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
-      document.getElementById('load-more').classList.toggle('hidden', list.length <= visible);
-      if(window.lucide) lucide.createIcons();
-    }
+    const price = prompt("السعر:", "حسب الطلب");
+    if (price === null) return;
 
-    function setFilter(f){ activeFilter = f; visible = 8; renderFilters(); renderProducts(); }
-    function saveCart(){ localStorage.setItem('reemBeautyCart', JSON.stringify(cart)); }
-    function updateCount(){
-      const count = cart.reduce((s,i)=>s+i.qty,0);
-      document.getElementById('cart-count').textContent = count;
-      document.getElementById('float-count').textContent = count;
-    }
-    function addToCart(id){
-      if(!products.find(p=>Number(p.id)===Number(id))){ toast('هذا المنتج غير موجود'); return; }
-      const item = cart.find(i=>Number(i.id)===Number(id));
-      if(item) item.qty += 1; else cart.push({id:Number(id),qty:1});
-      saveCart(); updateCount(); renderCart(); toast('تمت إضافة المنتج إلى السلة');
-    }
-    function changeQty(id, delta){
-      const item = cart.find(i=>Number(i.id)===Number(id)); if(!item) return;
-      item.qty += delta; if(item.qty<=0) cart = cart.filter(i=>Number(i.id)!==Number(id));
-      saveCart(); updateCount(); renderCart();
-    }
-    function removeItem(id){ cart = cart.filter(i=>Number(i.id)!==Number(id)); saveCart(); updateCount(); renderCart(); }
-    function renderCart(){
-      const wrap = document.getElementById('cart-items');
-      cart = cart.filter(ci => products.find(p=>Number(p.id)===Number(ci.id)));
-      saveCart(); updateCount();
-      if(cart.length === 0){ wrap.innerHTML = '<div class="py-16 text-center text-plum/55 font-bold"><div class="text-5xl mb-3">🛍️</div>السلة فارغة حالياً</div>'; document.getElementById('cart-total').textContent = '0 MRU'; return; }
-      let total = 0;
-      wrap.innerHTML = cart.map(ci => {
-        const p = products.find(x=>Number(x.id)===Number(ci.id));
-        total += Number(p.price || 0) * Number(ci.qty || 1);
-        return `<div class="flex gap-3 p-3 rounded-3xl bg-[#fff8fb] border border-rose-100">
-          <img src="${safe(p.img || DEFAULT_IMAGE)}" class="w-20 h-20 rounded-2xl object-cover" alt="${safe(p.name)}" onerror="this.src='${DEFAULT_IMAGE}'">
-          <div class="flex-1 min-w-0"><div class="font-black text-sm">${safe(p.name)}</div><div class="text-xs text-plum/55 font-bold mt-1">${money(p.price)}</div>
-            <div class="mt-3 flex items-center gap-2"><button onclick="changeQty(${p.id},-1)" class="w-8 h-8 rounded-full bg-white font-black">−</button><span class="w-7 text-center font-black">${ci.qty}</span><button onclick="changeQty(${p.id},1)" class="w-8 h-8 rounded-full bg-white font-black">+</button><button onclick="removeItem(${p.id})" class="mr-auto text-xs text-roseDeep font-black">حذف</button></div>
-          </div>
-        </div>`;
-      }).join('');
-      document.getElementById('cart-total').textContent = money(total);
-    }
-    function openCart(){ document.getElementById('cart-drawer').classList.remove('hidden'); setTimeout(()=>document.getElementById('cart-panel').classList.add('drawer-open'), 20); renderCart(); }
-    function closeCart(){ document.getElementById('cart-panel').classList.remove('drawer-open'); setTimeout(()=>document.getElementById('cart-drawer').classList.add('hidden'), 250); }
-    function quickWhatsApp(id){
-      const p = products.find(x=>Number(x.id)===Number(id)); if(!p) return;
-      const msg = `مرحبا ريم بيوتي ✨\nأريد طلب: ${p.name}\nالسعر: ${money(p.price)}\nهل المنتج متوفر؟`;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
-    }
-    function checkout(){
-      if(cart.length === 0){ toast('السلة فارغة'); return; }
-      const lines = cart.map(ci=>{ const p = products.find(x=>Number(x.id)===Number(ci.id)); return `• ${p.name} × ${ci.qty} = ${money(Number(p.price||0)*Number(ci.qty||1))}`; }).join('\n');
-      const total = cart.reduce((s,ci)=>{ const p = products.find(x=>Number(x.id)===Number(ci.id)); return s + Number(p.price||0)*Number(ci.qty||1); },0);
-      const msg = `مرحبا ريم بيوتي ✨\nأريد تأكيد هذا الطلب:\n\n${lines}\n\nالإجمالي: ${money(total)}\n\nالاسم:\nالعنوان:\nرقم الهاتف:`;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
-    }
-    function toast(text){ const t=document.getElementById('toast'); t.textContent=text; t.classList.remove('hidden'); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.classList.add('hidden'),2200); }
+    const desc = prompt("الوصف:", "منتج جديد من المتجر");
+    if (desc === null) return;
 
-    function openAccount(){
-      document.getElementById('account-modal').classList.remove('hidden');
-      document.getElementById('account-modal').classList.add('flex');
-      if(adminLoggedIn) showAdminPanel();
-      if(window.lucide) lucide.createIcons();
-    }
-    function closeAccount(){ document.getElementById('account-modal').classList.add('hidden'); document.getElementById('account-modal').classList.remove('flex'); }
-    function showAdminPanel(){
-      adminLoggedIn = true;
-      document.getElementById('login-section').classList.add('hidden');
-      document.getElementById('admin-section').classList.remove('hidden');
-      renderAdminProducts();
-      renderAdminCategoryOptions();
-    }
-    function logoutAdmin(){
-      adminLoggedIn = false;
-      document.getElementById('admin-section').classList.add('hidden');
-      document.getElementById('login-section').classList.remove('hidden');
-      clearAdminForm();
-      toast('تم تسجيل الخروج من لوحة التحكم');
-    }
+    const img = prompt("رابط الصورة:");
+    if (img === null) return;
 
-    function renderAdminCategoryOptions(){
-      const select = document.getElementById('admin-category');
-      const current = select.value;
-      select.innerHTML = categories.filter(c=>c.id!=='offers').map(c=>`<option value="${c.id}">${safe(c.name)}</option>`).join('');
-      if(current) select.value = current;
-    }
-    function productFormData(){
-      const id = document.getElementById('admin-product-id').value;
-      return {
-        id: id ? Number(id) : Date.now(),
-        name: document.getElementById('admin-name').value.trim(),
-        category: document.getElementById('admin-category').value,
-        price: Number(document.getElementById('admin-price').value || 0),
-        oldPrice: document.getElementById('admin-old-price').value ? Number(document.getElementById('admin-old-price').value) : null,
-        rating: Number(document.getElementById('admin-rating').value || 4.8),
-        desc: document.getElementById('admin-desc').value.trim(),
-        img: document.getElementById('admin-img').value.trim() || DEFAULT_IMAGE,
-        badge: document.getElementById('admin-badge').value.trim() || null
-      };
-    }
-    function saveProductFromAdmin(e){
-      e.preventDefault();
-      const p = productFormData();
-      if(!p.name){ toast('اكتب اسم المنتج'); return; }
-      const exists = products.findIndex(x=>Number(x.id)===Number(p.id));
-      if(exists >= 0){ products[exists] = p; toast('تم تعديل المنتج'); }
-      else { products.unshift(p); toast('تمت إضافة المنتج'); }
-      clearAdminForm();
-      saveProducts();
-    }
-    function clearAdminForm(){
-      document.getElementById('admin-product-id').value = '';
-      document.getElementById('admin-name').value = '';
-      document.getElementById('admin-category').value = 'makeup';
-      document.getElementById('admin-price').value = '';
-      document.getElementById('admin-old-price').value = '';
-      document.getElementById('admin-rating').value = '4.8';
-      document.getElementById('admin-desc').value = '';
-      document.getElementById('admin-img').value = '';
-      document.getElementById('admin-badge').value = '';
-      document.getElementById('admin-form-title').textContent = 'إضافة منتج جديد';
-      document.getElementById('admin-save-btn').innerHTML = '<i data-lucide="save" class="w-5 h-5"></i> حفظ المنتج';
-      document.getElementById('admin-cancel-edit').classList.add('hidden');
-      if(window.lucide) lucide.createIcons();
-    }
-    function editProduct(id){
-      const p = products.find(x=>Number(x.id)===Number(id)); if(!p) return;
-      renderAdminCategoryOptions();
-      document.getElementById('admin-product-id').value = p.id;
-      document.getElementById('admin-name').value = p.name || '';
-      document.getElementById('admin-category').value = p.category || 'makeup';
-      document.getElementById('admin-price').value = p.price || 0;
-      document.getElementById('admin-old-price').value = p.oldPrice || '';
-      document.getElementById('admin-rating').value = p.rating || 4.8;
-      document.getElementById('admin-desc').value = p.desc || '';
-      document.getElementById('admin-img').value = p.img || '';
-      document.getElementById('admin-badge').value = p.badge || '';
-      document.getElementById('admin-form-title').textContent = 'تعديل المنتج';
-      document.getElementById('admin-save-btn').innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> حفظ التعديل';
-      document.getElementById('admin-cancel-edit').classList.remove('hidden');
-      document.getElementById('account-box').scrollTo({top:0, behavior:'smooth'});
-      if(window.lucide) lucide.createIcons();
-    }
-    function deleteProduct(id){
-      const p = products.find(x=>Number(x.id)===Number(id)); if(!p) return;
-      if(!confirm(`حذف المنتج: ${p.name} ؟`)) return;
-      products = products.filter(x=>Number(x.id)!==Number(id));
-      cart = cart.filter(x=>Number(x.id)!==Number(id));
-      saveCart(); updateCount();
-      saveProducts(); toast('تم حذف المنتج');
-    }
-    function resetProducts(){
-      if(!confirm('هل تريدين إرجاع المنتجات الأصلية؟ سيتم حذف تعديلاتك الحالية.')) return;
-      products = cloneDefaultProducts(); cart = [];
-      saveCart(); updateCount(); clearAdminForm(); saveProducts(); toast('تم إرجاع المنتجات الأصلية');
-    }
-    function renderAdminProducts(){
-      const list = document.getElementById('admin-products-list');
-      const count = document.getElementById('admin-count');
-      if(!list || !count) return;
-      count.textContent = `${products.length} منتج`;
-      if(products.length === 0){ list.innerHTML = '<div class="py-10 text-center text-plum/55 font-bold">لا توجد منتجات حالياً</div>'; return; }
-      list.innerHTML = products.map(p=>`
-        <div class="flex gap-3 items-center p-3 rounded-3xl bg-[#fff8fb] border border-rose-100">
-          <img src="${safe(p.img || DEFAULT_IMAGE)}" class="w-16 h-16 rounded-2xl object-cover bg-roseMilk" alt="${safe(p.name)}" onerror="this.src='${DEFAULT_IMAGE}'">
-          <div class="flex-1 min-w-0">
-            <div class="font-black text-sm md:text-base truncate">${safe(p.name)}</div>
-            <div class="text-xs text-plum/55 font-bold mt-1">${safe(label(p.category))} • ${money(p.price)}</div>
-            <div class="text-xs text-roseDeep font-black mt-1">${p.badge ? safe(p.badge) : 'بدون شارة'}</div>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-2 shrink-0">
-            <button onclick="editProduct(${p.id})" class="px-3 h-10 rounded-full bg-white border border-rose-100 text-plum font-black text-xs">تعديل</button>
-            <button onclick="deleteProduct(${p.id})" class="px-3 h-10 rounded-full bg-roseDeep text-white font-black text-xs">حذف</button>
-          </div>
-        </div>`).join('');
-      if(window.lucide) lucide.createIcons();
-    }
-    function renderProductSelect(){
-      const select = document.getElementById('product-select');
-      if(!select) return;
-      select.innerHTML = '<option value="">اختاري منتجاً...</option>' + products.map(p=>`<option value="${safe(p.name)}">${safe(p.name)} - ${money(p.price)}</option>`).join('');
-    }
+    const products = getProducts();
 
-    document.addEventListener('DOMContentLoaded',()=>{
-      renderCategories(); renderFilters(); renderProducts(); updateCount(); renderCart(); renderProductSelect(); renderAdminCategoryOptions();
-      document.getElementById('search-toggle').onclick = () => { document.getElementById('search-bar').classList.toggle('hidden'); document.getElementById('search-input').focus(); };
-      document.getElementById('search-input').oninput = e => { search = e.target.value.trim(); visible = 8; renderProducts(); };
-      document.getElementById('load-more').onclick = () => { visible += 8; renderProducts(); };
-      document.getElementById('cart-btn').onclick = openCart;
-      document.getElementById('account-btn').onclick = openAccount;
-      document.getElementById('mobile-account-btn').onclick = () => { document.getElementById('mobile-menu').classList.add('hidden'); openAccount(); };
-      document.getElementById('close-account').onclick = closeAccount;
-      document.getElementById('account-overlay').onclick = closeAccount;
-      document.getElementById('client-login-form').onsubmit = e => {
-        e.preventDefault();
-        const email = document.getElementById('client-email').value.trim().toLowerCase();
-        const codeRaw = document.getElementById('client-code').value.trim();
-        // يقبل الأرقام الإنجليزية 1234 وكذلك العربية ١٢٣٤ حتى لا يظهر خطأ في الهاتف
-        const code = codeRaw
-          .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-          .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-          .replace(/\s+/g, '');
-        if(email === 'client@gmail.com' && code === '1234'){
-          toast('تم فتح لوحة التحكم');
-          showAdminPanel();
-        } else {
-          toast('الإيميل أو الكود غير صحيح — استخدم Client@gmail.com / 1234');
-        }
-      };
-      document.getElementById('admin-product-form').onsubmit = saveProductFromAdmin;
-      document.getElementById('admin-cancel-edit').onclick = clearAdminForm;
-      document.getElementById('admin-reset-products').onclick = resetProducts;
-      document.getElementById('admin-logout').onclick = logoutAdmin;
-      document.getElementById('open-cart-float').onclick = openCart;
-      document.getElementById('close-cart').onclick = closeCart;
-      document.getElementById('cart-overlay').onclick = closeCart;
-      document.getElementById('checkout-btn').onclick = checkout;
-      document.getElementById('clear-cart').onclick = () => { cart=[]; saveCart(); updateCount(); renderCart(); toast('تم تفريغ السلة'); };
-      document.getElementById('menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
-      document.querySelectorAll('#mobile-menu a').forEach(a=>a.onclick=()=>document.getElementById('mobile-menu').classList.add('hidden'));
-      document.querySelectorAll('[data-jump-filter]').forEach(btn=>btn.onclick=()=>{ setFilter(btn.dataset.jumpFilter); location.hash='#products'; });
-      document.getElementById('order-form').onsubmit = e => {
-        e.preventDefault(); const d=Object.fromEntries(new FormData(e.target).entries());
-        const msg = `طلب جديد من متجر ريم بيوتي ✨\n\nالاسم: ${d.name}\nالهاتف: ${d.phone}\nالمنتج: ${d.product || 'غير محدد'}\nالكمية: ${d.qty}\nالعنوان: ${d.address}\nملاحظات: ${d.notes || 'لا يوجد'}`;
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank'); toast('تم فتح واتساب لإرسال الطلب');
-      };
-      if(window.lucide) lucide.createIcons();
+    products.unshift({
+      id: Date.now(),
+      name: name.trim(),
+      price: price.trim(),
+      desc: desc.trim(),
+      img: img.trim()
     });
-  </script>
-</body>
-</html>
+
+    saveProducts(products);
+    renderProducts();
+  });
+
+  renderProducts();
+})();
+</script>
