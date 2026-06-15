@@ -1,1119 +1,358 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ريم بيوتي | Reem Beauty Mauritania</title>
+<!-- ✅ إصلاح ظهور المنتجات في الهاتف + إدارة المنتجات -->
+<style>
+  body {
+    overflow-x: hidden;
+  }
 
-  <style>
-    * {
-      box-sizing: border-box;
+  #reem-products-section {
+    direction: rtl;
+    padding: 45px 18px;
+    background: #fff7fb;
+    font-family: inherit;
+  }
+
+  #reem-products-section .reem-products-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  #reem-products-section h2 {
+    margin: 0;
+    font-size: 34px;
+    color: #241722;
+    font-weight: 900;
+  }
+
+  #reem-products-section .reem-small-title {
+    color: #a05779;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  #reem-admin-login-btn,
+  #reem-add-product-btn {
+    border: none;
+    background: #9b4f72;
+    color: white;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  #reem-add-product-btn {
+    display: none;
+    background: #2f7d48;
+  }
+
+  #reem-products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .reem-product-card {
+    display: block !important;
+    background: white;
+    border-radius: 28px;
+    padding: 16px;
+    box-shadow: 0 12px 35px rgba(74, 36, 58, 0.10);
+    border: 1px solid rgba(160, 87, 121, 0.15);
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .reem-product-img {
+    width: 100%;
+    height: 170px;
+    border-radius: 22px;
+    background: #f3e8ef;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reem-product-card h3 {
+    margin: 13px 0 6px;
+    color: #241722;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .reem-product-card p {
+    margin: 0 0 10px;
+    color: #8c7c86;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .reem-price {
+    color: #9b4f72;
+    font-weight: 900;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .reem-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .reem-order-btn,
+  .reem-edit-btn,
+  .reem-delete-btn {
+    flex: 1;
+    border: none;
+    border-radius: 16px;
+    padding: 10px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .reem-order-btn {
+    background: #9b4f72;
+    color: white;
+  }
+
+  .reem-edit-btn {
+    display: none;
+    background: #e7d2dc;
+    color: #4b2638;
+  }
+
+  .reem-delete-btn {
+    display: none;
+    background: #ffe1e1;
+    color: #a52424;
+  }
+
+  body.reem-admin-mode .reem-edit-btn,
+  body.reem-admin-mode .reem-delete-btn,
+  body.reem-admin-mode #reem-add-product-btn {
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    #reem-products-section {
+      padding: 35px 14px;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, Tahoma, sans-serif;
-      background: #fff7fb;
-      color: #251623;
-      overflow-x: hidden;
+    #reem-products-section .reem-products-head {
+      align-items: flex-start;
+      flex-direction: column;
     }
 
-    .top-offer {
-      background: #402132;
-      color: white;
-      text-align: center;
-      padding: 13px 10px;
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .top-offer strong {
-      display: block;
-      margin-top: 4px;
-      direction: ltr;
-    }
-
-    header {
-      background: #fffafc;
-      padding: 18px 16px;
-      border-bottom: 1px solid #f1dbe5;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 62px;
-      height: 62px;
-      border-radius: 22px;
-      background: #efd4ef;
-      color: #a05779;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
+    #reem-products-section h2 {
       font-size: 30px;
-      box-shadow: 0 10px 25px rgba(160, 87, 121, 0.18);
     }
 
-    .brand h1 {
-      margin: 0;
-      font-size: 30px;
-      font-weight: 900;
-      line-height: 1.1;
+    #reem-products-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
     }
 
-    .brand p {
-      margin: 5px 0 0;
-      color: #a05779;
-      font-weight: 800;
-      line-height: 1.5;
+    .reem-product-img {
+      height: 190px;
     }
+  }
+</style>
 
-    .header-icons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .round-icon {
-      width: 48px;
-      height: 48px;
-      border: none;
-      border-radius: 50%;
-      background: white;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-      font-size: 20px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -7px;
-      right: -5px;
-      min-width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #c7a15c;
-      color: #2b1723;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #fdebf4, #fff8fb);
-      padding: 55px 16px 35px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .hero-text h2 {
-      font-size: 58px;
-      margin: 0 0 12px;
-      line-height: 1.1;
-      color: #2c1928;
-    }
-
-    .hero-text p {
-      color: #9d6e85;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.8;
-      margin: 0 0 22px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: none;
-      padding: 14px 20px;
-      border-radius: 999px;
-      font-weight: 900;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .btn-primary {
-      background: #9b4f72;
-      color: white;
-    }
-
-    .btn-light {
-      background: white;
-      color: #9b4f72;
-      box-shadow: 0 8px 20px rgba(160, 87, 121, 0.12);
-    }
-
-    .hero-gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .hero-img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 35px;
-      border: 8px solid white;
-      box-shadow: 0 18px 45px rgba(160, 87, 121, 0.18);
-      background: #f5e1eb;
-    }
-
-    .hero-card {
-      background: white;
-      padding: 25px;
-      border-radius: 35px;
-      text-align: center;
-      box-shadow: 0 18px 45px rgba(160, 87, 121, 0.13);
-    }
-
-    .hero-card h3 {
-      margin: 0;
-      color: #9b4f72;
-      font-size: 33px;
-    }
-
-    .hero-card p {
-      margin: 8px 0 0;
-      color: #9d8b96;
-      font-weight: 700;
-    }
-
-    .features {
-      background: white;
-      padding: 40px 16px;
-    }
-
-    .features-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
-
-    .feature {
-      background: #fff8f3;
-      border-radius: 28px;
-      padding: 24px 15px;
-      text-align: center;
-      font-weight: 900;
-      font-size: 22px;
-      color: #2e1b29;
-    }
-
-    .feature span {
-      display: block;
-      color: #9b8b94;
-      font-size: 15px;
-      margin-top: 7px;
-      font-weight: 700;
-    }
-
-    .products-section {
-      padding: 55px 16px;
-      background: #fff;
-    }
-
-    .section-head {
-      max-width: 1100px;
-      margin: 0 auto 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 15px;
-    }
-
-    .small-title {
-      color: #a05779;
-      font-weight: 900;
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 42px;
-      color: #251623;
-    }
-
-    .search-area {
-      max-width: 1100px;
-      margin: 0 auto 22px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-    }
-
-    .search-area input {
-      width: 100%;
-      padding: 16px 18px;
-      border-radius: 22px;
-      border: 1px solid #eed0dc;
-      outline: none;
-      font-size: 16px;
-      background: #fffafd;
-      color: #2c1928;
-      font-weight: 700;
-    }
-
-    .search-area button {
-      border: none;
-      background: #4b2638;
-      color: white;
-      border-radius: 22px;
-      padding: 0 22px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    .categories {
-      max-width: 1100px;
-      margin: 0 auto 25px;
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-    }
-
-    .cat-btn {
-      white-space: nowrap;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: #fff0f7;
-      color: #9b4f72;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    .cat-btn.active {
-      background: #9b4f72;
-      color: white;
-    }
-
-    .products-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid !important;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-      visibility: visible !important;
-      opacity: 1 !important;
-      height: auto !important;
-      overflow: visible !important;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 30px;
-      padding: 16px;
-      box-shadow: 0 14px 38px rgba(74, 36, 58, 0.10);
-      border: 1px solid rgba(160, 87, 121, 0.13);
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-
-    .product-card img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      border-radius: 24px;
-      background: #f3e1eb;
-      display: block;
-    }
-
-    .product-card h3 {
-      margin: 14px 0 6px;
-      font-size: 21px;
-      color: #2b1723;
-      font-weight: 900;
-    }
-
-    .product-card p {
-      margin: 0 0 10px;
-      color: #8c7c86;
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .product-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0 14px;
-      gap: 8px;
-    }
-
-    .price {
-      color: #9b4f72;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    .category-name {
-      background: #fff0f7;
-      color: #9b4f72;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .card-actions button {
-      flex: 1;
-      border: none;
-      padding: 11px 8px;
-      border-radius: 16px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    .order-btn {
-      background: #9b4f72;
-      color: white;
-    }
-
-    .cart-btn {
-      background: #f2e4eb;
-      color: #4b2638;
-    }
-
-    .edit-btn {
-      display: none;
-      background: #e1d0f2;
-      color: #4d276c;
-    }
-
-    .delete-btn {
-      display: none;
-      background: #ffe0e0;
-      color: #9c2020;
-    }
-
-    body.admin-mode .edit-btn,
-    body.admin-mode .delete-btn {
-      display: inline-block !important;
-    }
-
-    body.admin-mode #addProductBtn {
-      display: inline-block !important;
-    }
-
-    #addProductBtn {
-      display: none;
-      background: #2f8f4e;
-      color: white;
-    }
-
-    .admin-panel {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 99999;
-      align-items: center;
-      justify-content: center;
-      padding: 15px;
-    }
-
-    .admin-panel.active {
-      display: flex;
-    }
-
-    .admin-box {
-      width: 100%;
-      max-width: 480px;
-      background: white;
-      border-radius: 28px;
-      padding: 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-
-    .admin-box h3 {
-      margin: 0 0 15px;
-      font-size: 25px;
-      color: #2b1723;
-    }
-
-    .admin-box input,
-    .admin-box textarea,
-    .admin-box select {
-      width: 100%;
-      padding: 13px;
-      border-radius: 16px;
-      border: 1px solid #e7c9d6;
-      margin-bottom: 10px;
-      font-size: 15px;
-      outline: none;
-      font-family: inherit;
-    }
-
-    .admin-box textarea {
-      min-height: 85px;
-      resize: vertical;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .modal-actions button {
-      flex: 1;
-      border: none;
-      padding: 13px;
-      border-radius: 16px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    .save {
-      background: #9b4f72;
-      color: white;
-    }
-
-    .close {
-      background: #eee;
-      color: #333;
-    }
-
-    footer {
-      background: #402132;
-      color: white;
-      text-align: center;
-      padding: 30px 16px;
-      line-height: 1.8;
-    }
-
-    .mobile-tools {
-      position: fixed;
-      left: 12px;
-      right: 12px;
-      bottom: 14px;
-      z-index: 9999;
-      display: none;
-      gap: 8px;
-      direction: rtl;
-    }
-
-    .mobile-tools button {
-      flex: 1;
-      border: none;
-      border-radius: 18px;
-      padding: 12px 8px;
-      background: #4b2638;
-      color: white;
-      font-weight: 900;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
-    }
-
-    .mobile-tools button:nth-child(2) {
-      background: #a05779;
-    }
-
-    .mobile-tools button:nth-child(3) {
-      background: #2f8f4e;
-    }
-
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding-bottom: 75px;
-      }
-
-      header {
-        position: relative;
-      }
-
-      .header-inner {
-        align-items: center;
-      }
-
-      .brand h1 {
-        font-size: 24px;
-      }
-
-      .brand p {
-        font-size: 14px;
-      }
-
-      .logo {
-        width: 55px;
-        height: 55px;
-        font-size: 25px;
-      }
-
-      .round-icon {
-        width: 44px;
-        height: 44px;
-      }
-
-      .hero {
-        padding: 35px 14px 20px;
-      }
-
-      .hero-text h2 {
-        font-size: 42px;
-      }
-
-      .hero-text p {
-        font-size: 17px;
-      }
-
-      .hero-gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-img {
-        height: 220px;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      .feature {
-        font-size: 18px;
-        padding: 20px 10px;
-      }
-
-      .section-head {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .section-head h2 {
-        font-size: 34px;
-      }
-
-      .search-area {
-        grid-template-columns: 1fr;
-      }
-
-      .search-area button {
-        padding: 14px;
-      }
-
-      .products-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 17px !important;
-        height: auto !important;
-        overflow: visible !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-
-      .product-card {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-      }
-
-      .product-card img {
-        height: 230px;
-      }
-
-      .mobile-tools {
-        display: flex;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="top-offer">
-    عروض جديدة كل أسبوع على منتجات التجميل والعناية
-    <strong>+222 37 92 96 37</strong>
-  </div>
-
-  <header>
-    <div class="header-inner">
-      <div class="header-icons">
-        <button class="round-icon" onclick="openAdminLogin()">👤</button>
-        <button class="round-icon" onclick="scrollToProducts()">🔍</button>
-        <button class="round-icon" onclick="showCart()">
-          🛒
-          <span class="cart-count" id="cartCount">0</span>
-        </button>
-      </div>
-
-      <div class="brand">
-        <div>
-          <h1>ريم بيوتي</h1>
-          <p>Reem Beauty · Mauritania</p>
-        </div>
-        <div class="logo">ر</div>
-      </div>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <h2>متجر أنيق</h2>
-        <p>منتجات تجميل مختارة بعناية في موريتانيا، طلب سريع عبر واتساب، وتوصيل داخل نواكشوط.</p>
-
-        <div class="hero-buttons">
-          <button class="btn btn-primary" onclick="scrollToProducts()">تسوقي الآن</button>
-          <button class="btn btn-light" onclick="openWhatsAppGeneral()">طلب واتساب</button>
-          <button class="btn btn-light" id="addProductBtn" onclick="openProductForm()">+ إضافة منتج</button>
-        </div>
-      </div>
-
-      <div class="hero-gallery">
-        <img class="hero-img" src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80" alt="منتجات تجميل">
-        <div>
-          <div class="hero-card">
-            <h3>خصم 20%</h3>
-            <p>على العناية بالبشرة</p>
-          </div>
-          <br>
-          <img class="hero-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80" alt="مكياج">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="features-grid">
-      <div class="feature">أصلي 100% <span>جودة مضمونة</span></div>
-      <div class="feature">توصيل سريع <span>داخل موريتانيا</span></div>
-      <div class="feature">دفع عند الاستلام <span>سهل وآمن</span></div>
-      <div class="feature">طلب واتساب <span>رسالة جاهزة</span></div>
-    </div>
-  </section>
-
-  <section class="products-section" id="productsSection">
-    <div class="section-head">
-      <div>
-        <div class="small-title">تسوقي حسب القسم</div>
-        <h2>أقسام المتجر</h2>
-      </div>
-
-      <button class="btn btn-primary" onclick="showAllProducts()">عرض كل المنتجات ←</button>
+<section id="reem-products-section">
+  <div class="reem-products-head">
+    <div>
+      <div class="reem-small-title">منتجات مختارة</div>
+      <h2>منتجات المتجر</h2>
     </div>
 
-    <div class="search-area">
-      <input id="searchInput" type="search" placeholder="ابحثي عن منتج..." oninput="renderProducts()">
-      <button onclick="renderProducts()">بحث</button>
-    </div>
-
-    <div class="categories" id="categories"></div>
-
-    <div class="products-grid" id="productsGrid"></div>
-  </section>
-
-  <footer>
-    <strong>ريم بيوتي · Reem Beauty Mauritania</strong><br>
-    منتجات تجميل وعناية مختارة بعناية<br>
-    واتساب: +222 37 92 96 37
-  </footer>
-
-  <div class="mobile-tools">
-    <button onclick="mobileSearch()">بحث</button>
-    <button onclick="openAdminLogin()">التحكم</button>
-    <button onclick="scrollToProducts()">المنتجات</button>
-  </div>
-
-  <div class="admin-panel" id="adminPanel">
-    <div class="admin-box">
-      <h3 id="adminTitle">دخول المدير</h3>
-
-      <div id="loginBox">
-        <input id="adminEmail" type="email" placeholder="إيميل المدير">
-        <input id="adminCode" type="password" placeholder="كود المدير">
-        <div class="modal-actions">
-          <button class="save" onclick="loginAdmin()">دخول</button>
-          <button class="close" onclick="closeAdminPanel()">إغلاق</button>
-        </div>
-      </div>
-
-      <div id="productBox" style="display:none;">
-        <input id="productName" type="text" placeholder="اسم المنتج">
-        <input id="productPrice" type="text" placeholder="السعر">
-        <select id="productCategory">
-          <option value="العناية بالبشرة">العناية بالبشرة</option>
-          <option value="المكياج">المكياج</option>
-          <option value="العطور">العطور</option>
-          <option value="الشعر">الشعر</option>
-          <option value="العناية بالجسم">العناية بالجسم</option>
-        </select>
-        <textarea id="productDesc" placeholder="وصف المنتج"></textarea>
-        <input id="productImage" type="text" placeholder="رابط صورة المنتج">
-        <div class="modal-actions">
-          <button class="save" onclick="saveProduct()">حفظ</button>
-          <button class="close" onclick="closeAdminPanel()">إغلاق</button>
-        </div>
-      </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button id="reem-admin-login-btn">حسابي</button>
+      <button id="reem-add-product-btn">+ إضافة منتج</button>
     </div>
   </div>
 
-  <script>
-    const ADMIN_EMAIL = "Client@gmail.com";
-    const ADMIN_CODE = "1234";
-    const WHATSAPP_NUMBER = "22237929637";
+  <div id="reem-products-grid"></div>
+</section>
 
-    const PRODUCTS_KEY = "reem_beauty_products_full_v1";
-    const CART_KEY = "reem_beauty_cart_count_v1";
+<script>
+(function () {
+  const ADMIN_EMAIL = "Client@gmail.com";
+  const ADMIN_CODE = "1234";
+  const WHATSAPP_NUMBER = "22237929637";
 
-    let currentCategory = "الكل";
-    let editingId = null;
+  const STORAGE_KEY = "reem_beauty_products_v1";
 
-    const defaultProducts = [
-      {
-        id: 1,
-        name: "مجموعة مكياج ناعمة",
-        price: "حسب الطلب",
-        category: "المكياج",
-        desc: "مجموعة مناسبة للاستخدام اليومي والمناسبات.",
-        img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: 2,
-        name: "كريم عناية بالبشرة",
-        price: "حسب الطلب",
-        category: "العناية بالبشرة",
-        desc: "منتج للعناية والترطيب اليومي للبشرة.",
-        img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: 3,
-        name: "عطر نسائي فاخر",
-        price: "حسب الطلب",
-        category: "العطور",
-        desc: "رائحة أنيقة وثابتة تناسب الهدايا.",
-        img: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: 4,
-        name: "زيت عناية بالشعر",
-        price: "حسب الطلب",
-        category: "الشعر",
-        desc: "اختيار مناسب للعناية بالشعر ولمعانه.",
-        img: "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: 5,
-        name: "لوشن للجسم",
-        price: "حسب الطلب",
-        category: "العناية بالجسم",
-        desc: "ترطيب يومي ورائحة لطيفة.",
-        img: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        id: 6,
-        name: "أحمر شفاه",
-        price: "حسب الطلب",
-        category: "المكياج",
-        desc: "لون جميل وثابت للمناسبات.",
-        img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=900&q=80"
-      }
-    ];
+  const defaultProducts = [
+    {
+      id: Date.now() + 1,
+      name: "فلتر زواج",
+      price: "حسب الطلب",
+      desc: "فلتر جميل ومناسب للمناسبات.",
+      img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 2,
+      name: "فلتر خطوبة",
+      price: "حسب الطلب",
+      desc: "تصميم أنيق بألوان ناعمة.",
+      img: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 3,
+      name: "فلتر تخرج",
+      price: "حسب الطلب",
+      desc: "فلتر احترافي لحفلات التخرج.",
+      img: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: Date.now() + 4,
+      name: "فلتر عقد زواج",
+      price: "حسب الطلب",
+      desc: "تصميم راقٍ ومناسب للتوثيق والمشاركة.",
+      img: "https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?auto=format&fit=crop&w=800&q=80"
+    }
+  ];
 
-    function getProducts() {
-      const saved = localStorage.getItem(PRODUCTS_KEY);
-
-      if (!saved) {
-        localStorage.setItem(PRODUCTS_KEY, JSON.stringify(defaultProducts));
-        return defaultProducts;
-      }
-
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        localStorage.setItem(PRODUCTS_KEY, JSON.stringify(defaultProducts));
-        return defaultProducts;
-      }
+  function getProducts() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
+      return defaultProducts;
     }
 
-    function saveProducts(products) {
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
+      return defaultProducts;
     }
+  }
 
-    function getCategories() {
-      const products = getProducts();
-      const cats = ["الكل", ...new Set(products.map(p => p.category || "أخرى"))];
-      return cats;
-    }
+  function saveProducts(products) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  }
 
-    function renderCategories() {
-      const box = document.getElementById("categories");
-      box.innerHTML = getCategories().map(cat => `
-        <button class="cat-btn ${cat === currentCategory ? "active" : ""}" onclick="setCategory('${cat}')">
-          ${cat}
-        </button>
-      `).join("");
-    }
+  function renderProducts() {
+    const grid = document.getElementById("reem-products-grid");
+    const products = getProducts();
 
-    function setCategory(cat) {
-      currentCategory = cat;
-      renderProducts();
-    }
-
-    function renderProducts() {
-      renderCategories();
-
-      const grid = document.getElementById("productsGrid");
-      const search = document.getElementById("searchInput").value.trim().toLowerCase();
-
-      let products = getProducts();
-
-      if (currentCategory !== "الكل") {
-        products = products.filter(p => p.category === currentCategory);
-      }
-
-      if (search) {
-        products = products.filter(p => {
-          const text = `${p.name} ${p.price} ${p.category} ${p.desc}`.toLowerCase();
-          return text.includes(search);
-        });
-      }
-
-      if (!products.length) {
-        grid.innerHTML = `
-          <div style="grid-column:1/-1;text-align:center;padding:35px;color:#9b4f72;font-weight:900;">
-            لا توجد منتجات مطابقة
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = products.map(product => `
-        <div class="product-card">
-          <img src="${product.img || fallbackImage()}" alt="${product.name}" onerror="this.src='${fallbackImage()}'">
-          <h3>${product.name}</h3>
-          <p>${product.desc || ""}</p>
-
-          <div class="product-meta">
-            <div class="price">${product.price || "حسب الطلب"}</div>
-            <div class="category-name">${product.category || "أخرى"}</div>
-          </div>
-
-          <div class="card-actions">
-            <button class="order-btn" onclick="orderProduct('${safeText(product.name)}')">طلب واتساب</button>
-            <button class="cart-btn" onclick="addToCart()">إضافة للسلة</button>
-            <button class="edit-btn" onclick="editProduct(${product.id})">تعديل</button>
-            <button class="delete-btn" onclick="deleteProduct(${product.id})">حذف</button>
-          </div>
+    if (!products.length) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:35px;color:#9b4f72;font-weight:800;">
+          لا توجد منتجات حالياً
         </div>
-      `).join("");
+      `;
+      return;
     }
 
-    function fallbackImage() {
-      return "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80";
-    }
+    grid.innerHTML = products.map(product => `
+      <div class="reem-product-card">
+        <img class="reem-product-img" src="${product.img || ''}" onerror="this.src='https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80'">
+        <h3>${product.name}</h3>
+        <p>${product.desc || ''}</p>
+        <div class="reem-price">${product.price || 'حسب الطلب'}</div>
 
-    function safeText(text) {
-      return String(text).replace(/'/g, "\\'");
-    }
+        <div class="reem-card-actions">
+          <button class="reem-order-btn" onclick="reemOrderProduct('${product.name}')">طلب واتساب</button>
+          <button class="reem-edit-btn" onclick="reemEditProduct(${product.id})">تعديل</button>
+          <button class="reem-delete-btn" onclick="reemDeleteProduct(${product.id})">حذف</button>
+        </div>
+      </div>
+    `).join("");
+  }
 
-    function scrollToProducts() {
-      document.getElementById("productsSection").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+  window.reemOrderProduct = function (name) {
+    const text = encodeURIComponent("السلام عليكم، أريد طلب: " + name);
+    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + text, "_blank");
+  };
 
-    function showAllProducts() {
-      currentCategory = "الكل";
-      document.getElementById("searchInput").value = "";
-      renderProducts();
-      scrollToProducts();
-    }
+  window.reemEditProduct = function (id) {
+    const products = getProducts();
+    const product = products.find(p => p.id === id);
+    if (!product) return;
 
-    function mobileSearch() {
-      scrollToProducts();
-      setTimeout(() => {
-        document.getElementById("searchInput").focus();
-      }, 500);
-    }
+    const name = prompt("اسم المنتج:", product.name);
+    if (name === null) return;
 
-    function openWhatsAppGeneral() {
-      const text = encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجات ريم بيوتي.");
-      window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + text, "_blank");
-    }
+    const price = prompt("السعر:", product.price);
+    if (price === null) return;
 
-    function orderProduct(name) {
-      const text = encodeURIComponent("السلام عليكم، أريد طلب المنتج: " + name);
-      window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + text, "_blank");
-    }
+    const desc = prompt("الوصف:", product.desc);
+    if (desc === null) return;
 
-    function addToCart() {
-      let count = Number(localStorage.getItem(CART_KEY) || 0);
-      count++;
-      localStorage.setItem(CART_KEY, count);
-      updateCart();
-      alert("تمت إضافة المنتج إلى السلة");
-    }
+    const img = prompt("رابط الصورة:", product.img);
+    if (img === null) return;
 
-    function updateCart() {
-      const count = Number(localStorage.getItem(CART_KEY) || 0);
-      document.getElementById("cartCount").textContent = count;
-    }
+    product.name = name.trim();
+    product.price = price.trim();
+    product.desc = desc.trim();
+    product.img = img.trim();
 
-    function showCart() {
-      const count = Number(localStorage.getItem(CART_KEY) || 0);
-      alert("عدد المنتجات في السلة: " + count);
-    }
-
-    function openAdminLogin() {
-      document.getElementById("adminPanel").classList.add("active");
-      document.getElementById("adminTitle").textContent = "دخول المدير";
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("productBox").style.display = "none";
-    }
-
-    function closeAdminPanel() {
-      document.getElementById("adminPanel").classList.remove("active");
-    }
-
-    function loginAdmin() {
-      const email = document.getElementById("adminEmail").value.trim();
-      const code = document.getElementById("adminCode").value.trim();
-
-      if (email === ADMIN_EMAIL && code === ADMIN_CODE) {
-        document.body.classList.add("admin-mode");
-        closeAdminPanel();
-        alert("تم فتح التحكم بنجاح");
-      } else {
-        alert("الإيميل أو الكود غير صحيح");
-      }
-    }
-
-    function openProductForm(product = null) {
-      editingId = product ? product.id : null;
-
-      document.getElementById("adminPanel").classList.add("active");
-      document.getElementById("adminTitle").textContent = product ? "تعديل المنتج" : "إضافة منتج";
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("productBox").style.display = "block";
-
-      document.getElementById("productName").value = product ? product.name : "";
-      document.getElementById("productPrice").value = product ? product.price : "حسب الطلب";
-      document.getElementById("productCategory").value = product ? product.category : "العناية بالبشرة";
-      document.getElementById("productDesc").value = product ? product.desc : "";
-      document.getElementById("productImage").value = product ? product.img : "";
-    }
-
-    function saveProduct() {
-      const name = document.getElementById("productName").value.trim();
-      const price = document.getElementById("productPrice").value.trim();
-      const category = document.getElementById("productCategory").value.trim();
-      const desc = document.getElementById("productDesc").value.trim();
-      const img = document.getElementById("productImage").value.trim();
-
-      if (!name) {
-        alert("اكتب اسم المنتج");
-        return;
-      }
-
-      const products = getProducts();
-
-      if (editingId) {
-        const product = products.find(p => p.id === editingId);
-        if (product) {
-          product.name = name;
-          product.price = price || "حسب الطلب";
-          product.category = category;
-          product.desc = desc;
-          product.img = img || fallbackImage();
-        }
-      } else {
-        products.unshift({
-          id: Date.now(),
-          name,
-          price: price || "حسب الطلب",
-          category,
-          desc,
-          img: img || fallbackImage()
-        });
-      }
-
-      saveProducts(products);
-      closeAdminPanel();
-      renderProducts();
-      alert("تم حفظ المنتج");
-    }
-
-    function editProduct(id) {
-      const products = getProducts();
-      const product = products.find(p => p.id === id);
-      if (!product) return;
-      openProductForm(product);
-    }
-
-    function deleteProduct(id) {
-      if (!confirm("هل تريد حذف هذا المنتج؟")) return;
-
-      const products = getProducts().filter(p => p.id !== id);
-      saveProducts(products);
-      renderProducts();
-      alert("تم حذف المنتج");
-    }
-
-    updateCart();
+    saveProducts(products);
     renderProducts();
-  </script>
+  };
 
-</body>
-</html>
+  window.reemDeleteProduct = function (id) {
+    if (!confirm("هل تريد حذف هذا المنتج؟")) return;
+
+    const products = getProducts().filter(p => p.id !== id);
+    saveProducts(products);
+    renderProducts();
+  };
+
+  document.getElementById("reem-admin-login-btn").addEventListener("click", function () {
+    if (document.body.classList.contains("reem-admin-mode")) {
+      document.body.classList.remove("reem-admin-mode");
+      this.textContent = "حسابي";
+      return;
+    }
+
+    const email = prompt("أدخل الإيميل:");
+    const code = prompt("أدخل الكود:");
+
+    if (email === ADMIN_EMAIL && code === ADMIN_CODE) {
+      document.body.classList.add("reem-admin-mode");
+      this.textContent = "خروج";
+      alert("تم الدخول إلى حساب المدير");
+    } else {
+      alert("الإيميل أو الكود غير صحيح");
+    }
+  });
+
+  document.getElementById("reem-add-product-btn").addEventListener("click", function () {
+    const name = prompt("اسم المنتج:");
+    if (!name) return;
+
+    const price = prompt("السعر:", "حسب الطلب");
+    if (price === null) return;
+
+    const desc = prompt("الوصف:", "منتج جديد من المتجر");
+    if (desc === null) return;
+
+    const img = prompt("رابط الصورة:");
+    if (img === null) return;
+
+    const products = getProducts();
+
+    products.unshift({
+      id: Date.now(),
+      name: name.trim(),
+      price: price.trim(),
+      desc: desc.trim(),
+      img: img.trim()
+    });
+
+    saveProducts(products);
+    renderProducts();
+  });
+
+  renderProducts();
+})();
+</script>
